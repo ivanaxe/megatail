@@ -64,7 +64,10 @@ if __name__ == "__main__":
         os.mkdir(data_path)
 
     r = reader(sensor_path)
-    for i in range(100):
+    count = 0
+    while count < 100 and not infinite_run:
+        if not infinite_run:
+            count += 1
         for s in r.continue_reading():
             print s.rstrip()
         
