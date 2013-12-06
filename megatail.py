@@ -65,7 +65,7 @@ if __name__ == "__main__":
 
     r = reader(sensor_path)
     count = 0
-    while count < 100 and not infinite_run:
+    while count < 100 or infinite_run:
         if not infinite_run:
             count += 1
         for s in r.continue_reading():
