@@ -5,6 +5,7 @@ import time
 import yaml
 import shutil
 
+# sensor_path = "/home/uploader/nginx_access_log/access.log"
 sensor_path = "/tmp/file"
 data_path = "/tmp/megatail"
 init_run = True
@@ -28,13 +29,13 @@ class reader:
             self.last_read = last_read
 
     def save_state(self, path):
-        f = open(path+".tmp", "w")
+        f = open(path+"/state.tmp", "w")
         f.write(yaml.dump((self.last_digest, self.last_read)))
         f.close()
-        shutil.move(path+".tmp",path)
+        shutil.move(path+"/state.tmp",path+"/state")
 
     def load_state(self, path):
-        (self.last_digest, self.last_read) = yaml.load(open(path))
+        (self.last_digest, self.last_read) = yaml.load(open(path+"/state"))
         
     def continue_reading(self):
 
@@ -59,33 +60,12 @@ class reader:
 
 if __name__ == "__main__":
 
-    if not os.path.exists("data_path"):
-        os.mkdir("data_path")
+    if not os.path.exists(data_path):
+        os.mkdir(data_path)
 
-    r = reader("/tmp/file")
+    r = reader(sensor_path)
     for i in range(100):
         for s in r.continue_reading():
             print s.rstrip()
         
         time.sleep(1)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-        
